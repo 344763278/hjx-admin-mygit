@@ -1,25 +1,26 @@
 <template>
     <div class="data-import">
+        <div class="title">数据导入</div>
         <div class="data-import-cont">
             <el-row :gutter="10">
-                <el-col :span="12">
-                    <div class="left">
-                        <el-form ref="form" :model="form" label-width="60px" inline>
-                            <el-form-item label="旧系统">
-                                <el-select v-model="form.region" class="my-region">
-                                    <el-option label="员工姓名" value="员工姓名"></el-option>
-                                    <el-option label="员工工号" value="员工工号"></el-option>
-                                    <el-option label="手机号码" value="手机号码"></el-option>
-                                    <el-option label="身份证" value="身份证"></el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="">
-                                <el-input v-model="form.name" :placeholder="'请输入'+form.region"></el-input>
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button type="primary" @click="oldSubmit(form)">搜索</el-button>
-                            </el-form-item>
-                        </el-form>
+                <el-col :span="11" class="left-wrap">
+                    <el-form ref="form" :model="form" label-width="60px" inline>
+                        <el-form-item label="旧系统">
+                            <el-select v-model="form.region" class="my-region">
+                                <el-option label="员工姓名" value="员工姓名"></el-option>
+                                <el-option label="员工工号" value="员工工号"></el-option>
+                                <el-option label="手机号码" value="手机号码"></el-option>
+                                <el-option label="身份证" value="身份证"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="">
+                            <el-input v-model="form.name" :placeholder="'请输入'+form.region"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="oldSubmit(form)">搜索</el-button>
+                        </el-form-item>
+                    </el-form>
+                    <div class="left"> 
                         <div class="default-show-text" v-show="defaultShow.old">请输入搜索条件</div>
                         <div class="no-result-text" v-show="noResultShow.old">没有符合条件的结果</div>
                         <table class="el-table el-table--border border-RB-none" cellspacing="0" cellpadding="0" border="0" v-show="sysTableShow.old">
@@ -137,26 +138,55 @@
                                     <el-button type="primary">选择</el-button>
                                 </div>
                             </div>
+                            <div class="more-info-item">
+                                <div class="more-info-desc">
+                                    <p>
+                                        <span>姓名：张三</span>
+                                        <span class="address">所在城市：北京</span>
+                                    </p>
+                                    <p>手机号码：15877774444</p>
+                                    <p>身份证号：1587777444411111111</p>
+                                </div>
+                                <div class="more-info-select">
+                                    <el-button type="primary">选择</el-button>
+                                </div>
+                            </div>
+                            <div class="more-info-item">
+                                <div class="more-info-desc">
+                                    <p>
+                                        <span>姓名：张三</span>
+                                        <span class="address">所在城市：北京</span>
+                                    </p>
+                                    <p>手机号码：15877774444</p>
+                                    <p>身份证号：1587777444411111111</p>
+                                </div>
+                                <div class="more-info-select">
+                                    <el-button type="primary">选择</el-button>
+                                </div>
+                            </div>  
                         </div>
                     </div>
                 </el-col>
-                <el-col :span="12">
-                    <div class="right">
-                        <el-form ref="form" :model="form2" label-width="60px" inline>
-                            <el-form-item label="新系统">
-                                <el-select v-model="form2.region" placeholder="" class="my-region">
-                                    <el-option label="员工姓名" value="员工姓名"></el-option>
-                                    <el-option label="手机号码" value="手机号码"></el-option>
-                                    <el-option label="身份证" value="身份证"></el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="">
-                                <el-input v-model="form2.name" :placeholder="'请输入'+form2.region"></el-input>
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button type="primary" @click="newSubmit(form2)">搜索</el-button>
-                            </el-form-item>
-                        </el-form>
+                <el-col :span="2" class="mid-wrap">
+                    <div class="line"></div>
+                </el-col>   
+                <el-col :span="11" class="right-wrap">
+                    <el-form ref="form" :model="form2" label-width="60px" inline>
+                        <el-form-item label="新系统">
+                            <el-select v-model="form2.region" placeholder="" class="my-region">
+                                <el-option label="员工姓名" value="员工姓名"></el-option>
+                                <el-option label="手机号码" value="手机号码"></el-option>
+                                <el-option label="身份证" value="身份证"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="">
+                            <el-input v-model="form2.name" :placeholder="'请输入'+form2.region"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="newSubmit(form2)">搜索</el-button>
+                        </el-form-item>
+                    </el-form>
+                    <div class="right"> 
                         <div class="default-show-text" v-show="defaultShow.new">请输入搜索条件</div>
                         <div class="no-result-text" v-show="noResultShow.new">没有符合条件的结果</div>
                         <table class="el-table el-table--border border-RB-none" cellspacing="0" cellpadding="0" border="0" v-show="sysTableShow.new">
@@ -315,17 +345,17 @@ export default {
             // 新旧系统的表格显示数据
             sysTableShow: {
                 old: false,
-                new: false
+                new: true
             },
             // 新旧系统的多条数据显示
             sysItemShow: {
-                old: false,
+                old: true,
                 new: false
             },
             // 没有搜索时的默认状态
             defaultShow: {
-                old: true,
-                new: true
+                old: false,
+                new: false
             },
             // 搜索无结果时的文案显示
             noResultShow: {
@@ -334,7 +364,7 @@ export default {
             },
             // 关联信息和解除信息
             msgRelative: {
-                on: false,
+                on: true,
                 off: false
             }, 
             // 只有新系统时的第一列显示数据
@@ -433,54 +463,68 @@ export default {
     }
 }
 
-</script>
-<style>
-.data-import .my-region {
-    width: 130px;
-}
-
-.data-import .msg-relative {
-    text-align: center;
-    height: 60px;
-    line-height: 60px;
-}
-
-.data-import tr,
-.data-import th {
-    height: 48px;
-    min-height: 48px;
-}
-
-</style>
+</script> 
 <style scoped lang="scss">
 .data-import {
-    max-width: 1300px;
+    // max-width: 1300px;
     .data-import-cont {
+        height: 540px;
+        .left-wrap {
+            height: 540px; 
+            .left {
+                height: 435px;
+                overflow-y: auto;
+            }
+        }
+        .line {
+            height: 435px;
+            width: 1px;
+            background: #DFE6EC;
+            position: relative;
+            top: 58px;
+            left: 50%;
+        }
+        .right-wrap {
+            height: 540px; 
+            .right {
+                min-height: 435px;
+                overflow-y: hidden;
+            } 
+        } 
+        tr, th {
+           height: 48px;
+           min-height: 48px; 
+        }
+        .my-region {
+            width: 130px;
+        } 
     	.more-info-wrap {
-    	    min-height: 150px;
-    	    .more-info-item {
-    	        border: 1px solid #DFE6EC;
-    	        min-height: 150px;
+    	    min-height: 130px; 
+    	    .more-info-item { 
+    	        min-height: 130px;
     	        display: flex;
-    	        margin-bottom: 10px;
+    	        margin-bottom: 12px;
+                font-size: 14px;
+                color: #1f2d3d;
     	        .more-info-desc {
+                    border: 1px solid #DFE6EC;
     	            flex: 1;
     	            p {
-    	                line-height: 50px;
+    	                line-height: 43px;
     	                padding: 0 10px;
     	                box-sizing: border-box;
     	                position: relative;
     	                .address {
     	                    position: absolute;
     	                    top: 0;
-    	                    right: 0;
+    	                    right: 10px;
     	                }
     	            }
     	        }
     	        .more-info-select {
     	            flex: 0 0 100px;
     	            text-align: center;
-    	            line-height: 150px;
+    	            line-height: 130px;
     	        }
     	    }
     	}
@@ -489,7 +533,12 @@ export default {
     	    line-height: 48px;
     	    padding-left: 6px;
     	}
-    }   
+    }  
+    .msg-relative {
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+    } 
 }
 
 </style>

@@ -168,7 +168,7 @@ export default {
                     token: token,
                     systemid: util.systemId
                 }
-            // this.setTestCookie()
+            // this.setTestCookie()  本地时打开一次即可
             if (!userid) {
                 window.location.href = util.powerCenterLoginPage + '/login?system_id=' + util.systemId + '&jump_url=' + host
             } else {
