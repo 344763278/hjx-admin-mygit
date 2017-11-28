@@ -142,9 +142,9 @@
                     // this.imageUrl2 = '/WebService/static/upload/' + baseInfo.strCardPicBack
                     // this.imageUrl3 = '/WebService/static/upload/' + baseInfo.strHeadPic
 
-                    this.imageUrl1 = this.apiRoot + '/static/upload/' + baseInfo.strCardPicFront
-                    this.imageUrl2 = this.apiRoot + '/static/upload/' + baseInfo.strCardPicBack
-                    this.imageUrl3 = this.apiRoot + '/static/upload/' + baseInfo.strHeadPic
+                    this.imageUrl1 = baseInfo.strCardPicFront?this.apiRoot + '/static/upload/' + baseInfo.strCardPicFront:''
+                    this.imageUrl2 = baseInfo.strCardPicBack?this.apiRoot + '/static/upload/' + baseInfo.strCardPicBack:''
+                    this.imageUrl3 = baseInfo.strHeadPic?this.apiRoot + '/static/upload/' + baseInfo.strHeadPic:''
                 })
             },
 
@@ -154,15 +154,15 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         // if(!this.ruleForm.strCardPicFront){
-                        //     this.$layer.alert('请上传身份证正面照片')
+                        //     this.$alert('请上传身份证正面照片','提示')
                         //     return
                         // } 
                         // if(!this.ruleForm.strCardPicBack) {
-                        //     this.$layer.alert('请上传身份证背面照片')
+                        //     this.$alert('请上传身份证背面照片','提示')
                         //     return
                         // }
                         // if(!this.ruleForm.strHeadPic) {
-                        //     this.$layer.alert('请上传头像')
+                        //     this.$alert('请上传头像','提示')
                         //     return
                         // }
                         api.editDLogic({duser:this.ruleForm}).then(res => {
