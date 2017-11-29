@@ -45,10 +45,10 @@
                         <div class="no-result-text result" v-show="noResultShow.old">没有符合条件的结果</div>
                         <table class="el-table el-table--border border-RB-none" cellspacing="0" cellpadding="0" border="0" v-show="sysTableShow.old">
                             <tr>
-                                <th width="10%" class="is-leaf">
+                                <th width="50%" class="is-leaf">
                                     <div class="cell">系统名称</div>
                                 </th>
-                                <th width="15%" class="is-leaf">
+                                <th width="50%" class="is-leaf">
                                     <div class="cell">老系统信息</div>
                                 </th>
                             </tr>
@@ -156,33 +156,7 @@
                                 <div class="more-info-select">
                                     <el-button type="primary">选择</el-button>
                                 </div>
-                            </div>
-                            <div class="more-info-item">
-                                <div class="more-info-desc">
-                                    <p>
-                                        <span>姓名：张三</span>
-                                        <span class="address">所在城市：北京</span>
-                                    </p>
-                                    <p>手机号码：15877774444</p>
-                                    <p>身份证号：1587777444411111111</p>
-                                </div>
-                                <div class="more-info-select">
-                                    <el-button type="primary">选择</el-button>
-                                </div>
-                            </div>
-                            <div class="more-info-item">
-                                <div class="more-info-desc">
-                                    <p>
-                                        <span>姓名：张三</span>
-                                        <span class="address">所在城市：北京</span>
-                                    </p>
-                                    <p>手机号码：15877774444</p>
-                                    <p>身份证号：1587777444411111111</p>
-                                </div>
-                                <div class="more-info-select">
-                                    <el-button type="primary">选择</el-button>
-                                </div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </el-col>
@@ -195,13 +169,13 @@
                         <div class="no-result-text result" v-show="noResultShow.new">没有符合条件的结果</div>
                         <table class="el-table el-table--border border-RB-none" cellspacing="0" cellpadding="0" border="0" v-show="sysTableShow.new">
                             <tr>
-                                <th v-show="onlyNewSys" width="10%" class="is-leaf">
+                                <th v-show="onlyNewSys" width="33%" class="is-leaf">
                                     <div class="cell">系统名称</div>
                                 </th>
-                                <th width="15%" class="is-leaf">
+                                <th width="33%" class="is-leaf">
                                     <div class="cell">新系统信息</div>
                                 </th>
-                                <th width="15%" class="is-leaf">
+                                <th width="33%" class="is-leaf">
                                     <div class="cell">信息是否一致</div>
                                 </th>
                             </tr>
@@ -349,12 +323,12 @@ export default {
             },
             // 新旧系统的表格显示数据
             sysTableShow: {
-                old: false,
+                old: true,
                 new: true
             },
             // 新旧系统的多条数据显示
             sysItemShow: {
-                old: true,
+                old: false,
                 new: false
             },
             // 没有搜索时的默认状态
@@ -380,14 +354,17 @@ export default {
         newSubmit(form) {
             if (!form.name) { return }
             let rs = this.validate(form)
-            let initParams = { id: '', name: '' }
+            let initParams = {}
             let dataParams = {}
+            // 判断是否通过验证
             if (!rs.isPass) {
                 this.$message({
                     message: rs.msg,
                     type: 'warning'
                 })
+                return
             } else {
+                // 判断是否是全选
                 if (this.newForm.isAllSelect) {
                     dataParams = Object.assign(initParams, {
                         [rs.type]: form.name
@@ -412,6 +389,7 @@ export default {
                     message: rs.msg,
                     type: 'warning'
                 })
+                return
             } else {
                 // 数据合并
                 if (this.newForm.isAllSelect) {
@@ -451,7 +429,7 @@ export default {
                 let reg = /^[\u4e00-\u9fa5]+$/g.test(opt.name) && (opt.name.length < 11 && opt.name.length > 1)
                 if (reg) {
                     result.isPass = true
-                    result.type = 'xm'
+                    result.type = 'username'
                 } else {
                     result.isPass = false
                     result.msg = '请输入2-10位汉字搜索'
@@ -461,7 +439,7 @@ export default {
                 let reg = /^1\d{10}$/.test(opt.name)
                 if (reg) {
                     result.isPass = true
-                    result.type = 'sj'
+                    result.type = 'phone'
                 } else {
                     result.isPass = false
                     result.msg = '请输入11位手机号码'
@@ -471,7 +449,7 @@ export default {
                 let reg = /^[A-Za-z0-9]+$/.test(opt.name) && opt.name.length < 20
                 if (reg) {
                     result.isPass = true
-                    result.type = 'yggh'
+                    result.type = 'number'
                 } else {
                     result.isPass = false
                     result.msg = '请输入20位以内的数字和字母字符'
@@ -481,7 +459,7 @@ export default {
                 let reg = /\d{18}/.test(opt.name) && (opt.name.length == 18)
                 if (reg) {
                     result.isPass = true
-                    result.type = 'sfz'
+                    result.type = 'idCard'
                 } else {
                     result.isPass = false
                     result.msg = '请输入18位身份证号码'
@@ -491,8 +469,8 @@ export default {
         }
     },
     mounted() {
-        api.getOldImportData({ wd: '你好' }).then((res) => {
-            console.log(res)
+        api.getOldImportData({ wd: '你好',test1:'测试1', test2: '测试2'}).then((res) => {
+            // console.log(res)
         })
     }
 }
