@@ -127,7 +127,8 @@ export function crossDomain(Interface, params) {
 
 /* jsonp接口开始 */ 
 export function jsonp(_interface, params) { 
-    let url = `${util.jsonpUrl}?type=jsonp`
+    let token = get_cookie('useruuid')
+    let url = `${util.jsonpUrl}?type=jsonp&token=${token}`
     let resParams = {     
         "head": {        
             "version": "0.01",

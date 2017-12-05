@@ -57,7 +57,7 @@
                                     <div class="cell">员工姓名</div>
                                 </td>
                                 <td>
-                                    <div class="cell">{{oldSysData.name}}</div>
+                                    <div class="cell">{{oldSysData.username}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -65,7 +65,7 @@
                                     <div class="cell">员工角色</div>
                                 </td>
                                 <td>
-                                    <div class="cell">{{oldSysData.role}}</div>
+                                    <div class="cell">{{oldSysData.level}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -81,7 +81,7 @@
                                     <div class="cell">所属商户</div>
                                 </td>
                                 <td>
-                                    <div class="cell">{{oldSysData.channel}}</div>
+                                    <div class="cell">{{oldSysData.channelName}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -113,51 +113,25 @@
                                     <div class="cell">是否与其他账号进行关联</div>
                                 </td>
                                 <td>
-                                    <div class="cell"><span style="color:red;" v-show="oldSysData.isBind=='0'">是（已与“张三”进行关联）</span></div>
-                                    <div class="cell"><span v-show="oldSysData.isBind=='1'">否</span></div>
+                                    <div class="cell"><span style="color:red;" v-show="oldSysData.associated=='是'">是（已与“{{oldSysData.assocUser}}”进行关联）</span></div>
+                                    <div class="cell"><span v-show="oldSysData.associated=='否'">否</span></div>
                                 </td>
                             </tr>
                         </table>
                         <div class="more-info-wrap" v-show="sysItemShow.old">
-                            <div class="more-info-item">
+                            <div class="more-info-item" v-for="(item,index) in oldSysItemData" :key="index">
                                 <div class="more-info-desc">
                                     <p>
-                                        <span>姓名：张三</span>
-                                        <span class="address">所在城市：北京</span>
+                                        <span>姓名：{{item.username}}</span>
+                                        <span class="address">所在城市：{{item.city}}</span>
                                     </p>
-                                    <p>手机号码：15877774444</p>
-                                    <p>身份证号：1587777444411111111</p>
+                                    <p>手机号码：{{item.phone}}</p>
+                                    <p>身份证号：{{item.idCard}}</p>
                                 </div>
                                 <div class="more-info-select">
-                                    <el-button type="primary">选择</el-button>
+                                    <el-button type="primary" @click="showDetail('old',item)">选择</el-button>
                                 </div>
-                            </div>
-                            <div class="more-info-item">
-                                <div class="more-info-desc">
-                                    <p>
-                                        <span>姓名：张三</span>
-                                        <span class="address">所在城市：北京</span>
-                                    </p>
-                                    <p>手机号码：15877774444</p>
-                                    <p>身份证号：1587777444411111111</p>
-                                </div>
-                                <div class="more-info-select">
-                                    <el-button type="primary">选择</el-button>
-                                </div>
-                            </div>
-                            <div class="more-info-item">
-                                <div class="more-info-desc">
-                                    <p>
-                                        <span>姓名：张三</span>
-                                        <span class="address">所在城市：北京</span>
-                                    </p>
-                                    <p>手机号码：15877774444</p>
-                                    <p>身份证号：1587777444411111111</p>
-                                </div>
-                                <div class="more-info-select">
-                                    <el-button type="primary">选择</el-button>
-                                </div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </el-col>
@@ -185,12 +159,12 @@
                                     <div class="cell">员工姓名</div>
                                 </td>
                                 <td>
-                                    <div class="cell">{{newSysData.name}}</div>
+                                    <div class="cell">{{newSysData.username}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell" style="color:red" v-show="oldSysData.name && (oldSysData.name != newSysData.name)">否</div>
-                                    <div class="cell" v-show="oldSysData.name && (oldSysData.name == newSysData.name)">是</div>
-                                    <div class="cell" v-show="!oldSysData.name">-</div> 
+                                    <div class="cell" style="color:red" v-show="oldSysData.username && (oldSysData.username != newSysData.username)">否</div>
+                                    <div class="cell" v-show="oldSysData.username && (oldSysData.username == newSysData.username)">是</div>
+                                    <div class="cell" v-show="!oldSysData.username">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -198,12 +172,12 @@
                                     <div class="cell">员工角色</div>
                                 </td>
                                 <td>
-                                    <div class="cell">{{newSysData.role}}</div>
+                                    <div class="cell">{{newSysData.level}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell" style="color:red" v-show="oldSysData.role && (oldSysData.role != newSysData.role)">否</div>
-                                    <div class="cell" v-show="oldSysData.role && (oldSysData.role == newSysData.role)">是</div>
-                                    <div class="cell" v-show="!oldSysData.role">-</div> 
+                                    <div class="cell" style="color:red" v-show="oldSysData.level && (oldSysData.level != newSysData.level)">否</div>
+                                    <div class="cell" v-show="oldSysData.level && (oldSysData.level == newSysData.level)">是</div>
+                                    <div class="cell" v-show="!oldSysData.level">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -224,12 +198,12 @@
                                     <div class="cell">所属商户</div>
                                 </td>
                                 <td>
-                                    <div class="cell">{{newSysData.channel}}</div>
+                                    <div class="cell">{{newSysData.channelName}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell" style="color:red" v-show="oldSysData.channel && (oldSysData.channel != newSysData.channel)">否</div>
-                                    <div class="cell" v-show="oldSysData.channel && (oldSysData.channel == newSysData.channel)">是</div>
-                                    <div class="cell" v-show="!oldSysData.channel">-</div> 
+                                    <div class="cell" style="color:red" v-show="oldSysData.channelName && (oldSysData.channelName != newSysData.channelName)">否</div>
+                                    <div class="cell" v-show="oldSysData.channelName && (oldSysData.channelName == newSysData.channelName)">是</div>
+                                    <div class="cell" v-show="!oldSysData.channelName">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -274,41 +248,28 @@
                                     <div class="cell">是否与其他账号进行关联</div>
                                 </td>
                                 <td> 
-                                    <div class="cell"><span style="color:red;" v-show="newSysData.isBind=='0'">是（已与“张三”进行关联）</span></div>
-                                    <div class="cell"><span v-show="newSysData.isBind=='1'">否</span></div>
+                                    <div class="cell"><span style="color:red;" v-show="newSysData.associated=='是'">是（已与“{{newSysData.assocUser}}”进行关联）</span></div>
+                                    <div class="cell"><span v-show="newSysData.associated=='否'">否</span></div>
                                 </td>
                                 <td>
                                     <div class="cell"></div>
                                 </td>
                             </tr>
                         </table>
-                        <div class="more-info-wrap" v-show="sysItemShow.new">
-                            <div class="more-info-item">
+                        <div class="more-info-wrap" v-show="sysItemShow.new"> 
+                            <div class="more-info-item" v-for="(item,index) in oldSysItemData" :key="index">
                                 <div class="more-info-desc">
                                     <p>
-                                        <span>姓名：张三</span>
-                                        <span class="address">所在城市：北京</span>
+                                        <span>姓名：{{item.username}}</span>
+                                        <span class="address">所在城市：{{item.city}}</span>
                                     </p>
-                                    <p>手机号码：15877774444</p>
-                                    <p>身份证号：1587777444411111111</p>
+                                    <p>手机号码：{{item.phone}}</p>
+                                    <p>身份证号：{{item.idCard}}</p>
                                 </div>
                                 <div class="more-info-select">
-                                    <el-button type="primary">选择</el-button>
+                                    <el-button type="primary" @click="showDetail('new',item)">选择</el-button>
                                 </div>
-                            </div>
-                            <div class="more-info-item">
-                                <div class="more-info-desc">
-                                    <p>
-                                        <span>姓名：张三</span>
-                                        <span class="address">所在城市：北京</span>
-                                    </p>
-                                    <p>手机号码：15877774444</p>
-                                    <p>身份证号：1587777444411111111</p>
-                                </div>
-                                <div class="more-info-select">
-                                    <el-button type="primary">选择</el-button>
-                                </div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </el-col>
@@ -336,8 +297,8 @@ export default {
             },
             // 新旧系统的表格显示数据
             sysTableShow: {
-                old: true,
-                new: true
+                old: false,
+                new: false
             },
             // 新旧系统的多条数据显示
             sysItemShow: {
@@ -346,45 +307,43 @@ export default {
             },
             // 没有搜索时的默认状态
             defaultShow: {
-                old: false,
-                new: false
+                old: true,
+                new: true
             },
             // 搜索无结果时的文案显示
             noResultShow: {
                 old: false,
                 new: false
-            },
-            // 关联信息和解除信息
-            msgRelative: {
-                on: true
-            },
+            }, 
             // 只有新系统时的第一列显示数据
             onlyNewSys: true,
 
             // 旧新系统的具体数据
             oldSysData: {
-                name: '老田',
-                role: 's1',
-                store: 'A门店',
-                channel: 'B商户',
-                phone: '15788889999',
-                idCard: '43112388887777',
-                number: 'asda123456',
-                isBind: '0',
-                city:'',
-                who:''
+                username: '',
+                user_id: '',
+                level: '',
+                store: '',
+                channelName: '',
+                phone: '',
+                idCard: '',
+                number: '',
+                associated: '',
+                assocUser: '',
+                city:''
             },
             newSysData: {
-                name: '老1田',
-                role: 's1',
-                store: 'A门1店',
-                channel: 'B商1户',
-                phone: '157881889999',
-                idCard: '431121388887777',
-                number: 'asda123456',
-                isBind: '1', //1代表没有绑定，0代表已经绑定
-                city:'',
-                who:''
+                username: '',
+                user_id: '',
+                level: '',
+                store: '',
+                channelName: '',
+                phone: '',
+                idCard: '',
+                number: '',
+                associated: '',
+                assocUser: '',
+                city:''
             },
             // 旧新系统的列表数据
             oldSysItemData: [],
@@ -394,8 +353,7 @@ export default {
     methods: {
         newSubmit(form) {
             if (!form.name) { return }
-            let rs = this.validate(form)
-            let initParams = {}
+            let rs = this.validate(form) 
             let dataParams = {}
             // 验证不通过
             if (!rs.isPass) {
@@ -407,12 +365,10 @@ export default {
             } else {
                 // 验证通过并判断是否为全选
                 if (this.newForm.isAllSelect) {
-                    dataParams = Object.assign(initParams, {
-                        [rs.type]: form.name }, { isAll: true })
+                    dataParams = {[rs.type]: form.name }
                     this.fetchDate('new', 'all', dataParams)
                 } else {
-                    dataParams = Object.assign(initParams, {
-                        [rs.type]: form.name }, { isAll: false })
+                    dataParams = {[rs.type]: form.name }
                     this.fetchDate('new', 'one', dataParams)
                 }
                 this.newForm.name = ''
@@ -422,8 +378,7 @@ export default {
         oldSubmit(form) {
             if (!form.name) { return }
             let rs = this.validate(form)
-            // 模拟接口初始数据 
-            let initParams = {}
+            // 模拟接口初始数据  
             let dataParams = {}
             // 验证不通过
             if (!rs.isPass) {
@@ -434,13 +389,11 @@ export default {
                 return
             } else {
                 // 验证通过并判断是否为全选
-                if (this.newForm.isAllSelect) {
-                    dataParams = Object.assign(initParams, {
-                        [rs.type]: form.name }, { isAll: true })
+                if (this.newForm.isAllSelect) { 
+                    dataParams = {[rs.type]: form.name }
                     this.fetchDate('old', 'all', dataParams)
                 } else {
-                    dataParams = Object.assign(initParams, {
-                        [rs.type]: form.name }, { isAll: false })
+                    dataParams = {[rs.type]: form.name }
                     this.fetchDate('old', 'one', dataParams)
                 }
                 this.oldForm.name = ''
@@ -451,18 +404,112 @@ export default {
         fetchDate(isNew, isAll, data) {
             if (isNew == 'new' && isAll == 'one') {
                 console.log('新系统，单独搜索')
+                this.handlerNewSys(data)
             }
             if (isNew == 'old' && isAll == 'one') {
-                console.log('老系统，单独搜索')
+                console.log('老系统，单独搜索') 
+                this.handlerOldSys(data)
             }
             if (isAll == "all") {
-                console.log('新旧同时搜索')
+                console.log('新旧同时搜索') 
+                this.handlerOldSys(data)
+                this.handlerNewSys(data)
             } 
+        },
+        handlerOldSys(data) { 
+            api.searchOldSystem(data).then((res) => {
+                if (res.body.ret != '0') {
+                    this.$message({
+                        message: retinfo,
+                        type: 'warning'
+                    })
+                    return
+                }
+
+                if (res.body.data.length == 1) {
+                    this.oldSysData = Object.assign(this.oldSysData, res.body.data[0])
+                    this.defaultShow.old = false
+                    this.sysItemShow.old = false 
+                    this.noResultShow.old = false
+                    this.sysTableShow.old = true
+
+                    // 模拟多个数据的情况
+                    // this.defaultShow.old = false
+                    // this.sysItemShow.old = true
+                    // this.sysTableShow.old = false
+                    // this.oldSysItemData = this.oldSysItemData
+                } else if (res.body.data.length > 1) {
+                    this.oldSysItemData = res.body.data
+                    this.defaultShow.old = false 
+                    this.sysTableShow.old = false
+                    this.noResultShow.old = false
+                    this.sysItemShow.old = true
+                } else {
+                    this.defaultShow.old = false
+                    this.sysItemShow.old = false
+                    this.sysTableShow.old = false
+                    this.noResultShow.old = true
+                }
+
+            }) 
+        },
+        handlerNewSys(data) {
+            api.searchNewSystem(data).then((res) => {
+                if (res.body.ret != '0') {
+                    this.$message({
+                        message: retinfo,
+                        type: 'warning'
+                    })
+                    return
+                } 
+
+
+                if (res.body.data.length == 1) {
+                    this.newSysData = Object.assign(this.newSysData, res.body.data[0])
+                    this.defaultShow.new = false 
+                    this.sysItemShow.new = false
+                    this.noResultShow.new = false
+                    this.sysTableShow.new = true
+
+                    // 模拟多个数据的情况
+                    // this.defaultShow.new = false
+                    // this.sysItemShow.new = true
+                    // this.sysTableShow.new = false
+                    // this.newSysItemData = this.newSysItemData
+                } else if (res.body.data.length > 1) {
+                    this.newSysItemData = res.body.data
+                    this.defaultShow.new = false
+                    this.noResultShow.new = false
+                    this.sysTableShow.new = false
+                    this.sysItemShow.new = true
+                    
+                } else { 
+                    this.defaultShow.new = false
+                    this.sysItemShow.new = false
+                    this.sysTableShow.new = false
+                    this.noResultShow.new = true
+                }
+
+            })
+        },
+        // 显示详细信息
+        showDetail(flag, item) {
+            // console.log(item)
+            if (flag == 'old') {
+                this.sysItemShow.old = false
+                this.oldSysData = item
+                this.sysTableShow.old = true
+            } 
+            if (flag == 'new') {
+                this.sysItemShow.new = false
+                this.newSysData = item
+                this.sysTableShow.new = true
+            }
         },
         // 信息关联
         msg_Relative() {
-            let name1 = this.oldSysData.name
-            let name2 = this.newSysData.name
+            let name1 = this.oldSysData.username
+            let name2 = this.newSysData.username
             const h = this.$createElement
             this.$msgbox({
                 title: '确认信息关联',
@@ -478,6 +525,9 @@ export default {
                 confirmButtonText: '确认'
             }).then((action) => {
                 console.log('确定，开始接口操作')
+                let oldSysUserId = this.oldSysData.user_id,
+                    newSysUserId = this.newSysData.user_id
+                console.log(oldSysUserId,newSysUserId )
             }).catch((res) => { console.log(res) })
         },
         // 字段验证
@@ -529,16 +579,16 @@ export default {
     computed: {
         // 是否可以关联
         canBind() {
-            return this.sysTableShow.old && this.sysTableShow.new && this.oldSysData.isBind == '1' && this.newSysData.isBind == '1'
+            return this.sysTableShow.old && this.sysTableShow.new && this.oldSysData.associated == '否' && this.newSysData.associated == '否'
         }
     },
     mounted() {
         // api.searchNewSystem({ number: 'XHJX45885474' }).then((res) => {
         //     console.log(res)
         // })
-        api.searchOldSystem({ number: 'DX00201039' }).then((res) => {
-            console.log(res)
-        })
+        // api.searchOldSystem({ number: 'DX00201039' }).then((res) => {
+        //     console.log(res)
+        // })
     }
 }
 
