@@ -125,21 +125,10 @@ export function crossDomain(Interface, params) {
     })
 }
 
-/* jsonp接口开始 */
-// function param(data) {
-//     let url = ''
-//     for (var k in data) {
-//         let value = data[k] !== undefined ? data[k] : ''
-//         url += '&' + k + '=' + encodeURIComponent(value)
-//     }
-//     return url ? url.substring(1) : ''
-// } 
-
-// 待处理 1 data的拼接，一般有登录信息 2 err的token失效时登录信息的跳转
-// 使用时，修改url，去除wd = 你好,修改option的callback
-export function jsonp(_interface, data) {
-    var url = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su'
-    var resParams = {    
+/* jsonp接口开始 */ 
+export function jsonp(_interface, params) { 
+    let url = `${util.jsonpUrl}?type=jsonp`
+    let resParams = {     
         "head": {        
             "version": "0.01",
             "msgtype": "request",
@@ -150,15 +139,19 @@ export function jsonp(_interface, data) {
             "system": "test"  
         }
     }
-    resParams.params = Object.assign({}, resParams.params, data) 
-    var head_value = JSON.stringify(resParams.head)
-    var params_value = JSON.stringify(resParams.params)
-    url = `${url}?head=${head_value}&params=${params_value}&wd=你好`
-    console.log(url)
-    
-    // url += (url.indexOf('?') < 0 ? '?' : '&') + param(data) 
+    // 合并参数 
+    resParams.params = Object.assign({}, resParams.params, params)
+    // console.log(resParams)
+    // 拼接参数,注意jsonp不能直接字符串化json,后台解析不了
+    for (let i in resParams) { 
+        for(let j in resParams[i] ) {
+            // console.log(j,resParams[i][j]) 
+            url += `&${i}[${j}]=${resParams[i][j]}` 
+        }
+    }  
+    // url = `${url}&head[version]=0.01&head[msgtype]=request&head[interface]=newSystem&head[remark]=&params[system]=test&params[number]=12345678`   
     return new Promise((resolve, reject) => {
-        originJsonp(url, {param: 'cb'}, (err, data) => {
+        originJsonp(url, {param: 'callback'}, (err, data) => {
             if (!err) {
                 resolve(data)
             } else {
@@ -170,8 +163,11 @@ export function jsonp(_interface, data) {
 /* jsonp接口结束 */
 
 export default {
-    //数据关联 jsonp接口测试 
-    getOldImportData(params) { return jsonp('searchNewSystem',params) }, //测试百度搜索接口,这里传接口，调用传参数
+    //jsonp接口数据关联
+    searchNewSystem(params) { return jsonp('newSystem',params) }, //搜索新系统
+    searchOldSystem(params) { return jsonp('oldSystem',params) }, //搜索旧系统
+    searchAllSystem(params) { return jsonp('newSystem',params) }, //新旧同时搜索
+    msgBind(params) { return jsonp('newSystem',params) }, //信息关联
 
     Login(params) { return fetch('loginLogic', params) }, // 用户登录
     upload(params) { return fetch('upload', params) }, // 

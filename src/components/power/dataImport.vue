@@ -57,7 +57,7 @@
                                     <div class="cell">员工姓名</div>
                                 </td>
                                 <td>
-                                    <div class="cell">张三</div>
+                                    <div class="cell">{{oldSysData.name}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -65,7 +65,7 @@
                                     <div class="cell">员工角色</div>
                                 </td>
                                 <td>
-                                    <div class="cell">S1</div>
+                                    <div class="cell">{{oldSysData.role}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -73,7 +73,7 @@
                                     <div class="cell">所属门店</div>
                                 </td>
                                 <td>
-                                    <div class="cell">A门店</div>
+                                    <div class="cell">{{oldSysData.store}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -81,7 +81,7 @@
                                     <div class="cell">所属商户</div>
                                 </td>
                                 <td>
-                                    <div class="cell">B渠道</div>
+                                    <div class="cell">{{oldSysData.channel}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -89,7 +89,7 @@
                                     <div class="cell">手机号码</div>
                                 </td>
                                 <td>
-                                    <div class="cell">15899996666</div>
+                                    <div class="cell">{{oldSysData.phone}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -97,7 +97,7 @@
                                     <div class="cell">身份证号</div>
                                 </td>
                                 <td>
-                                    <div class="cell">1111111111111111111</div>
+                                    <div class="cell">{{oldSysData.idCard}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -105,7 +105,7 @@
                                     <div class="cell">门店工号</div>
                                 </td>
                                 <td>
-                                    <div class="cell"></div>
+                                    <div class="cell">{{oldSysData.number}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -113,7 +113,8 @@
                                     <div class="cell">是否与其他账号进行关联</div>
                                 </td>
                                 <td>
-                                    <div class="cell"><span style="color:red;">是</span></div>
+                                    <div class="cell"><span style="color:red;" v-show="oldSysData.isBind=='0'">是（已与“张三”进行关联）</span></div>
+                                    <div class="cell"><span v-show="oldSysData.isBind=='1'">否</span></div>
                                 </td>
                             </tr>
                         </table>
@@ -156,7 +157,7 @@
                                 <div class="more-info-select">
                                     <el-button type="primary">选择</el-button>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                 </el-col>
@@ -184,10 +185,12 @@
                                     <div class="cell">员工姓名</div>
                                 </td>
                                 <td>
-                                    <div class="cell">张三</div>
+                                    <div class="cell">{{newSysData.name}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell">-</div>
+                                    <div class="cell" style="color:red" v-show="oldSysData.name && (oldSysData.name != newSysData.name)">否</div>
+                                    <div class="cell" v-show="oldSysData.name && (oldSysData.name == newSysData.name)">是</div>
+                                    <div class="cell" v-show="!oldSysData.name">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -195,10 +198,12 @@
                                     <div class="cell">员工角色</div>
                                 </td>
                                 <td>
-                                    <div class="cell">S1</div>
+                                    <div class="cell">{{newSysData.role}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell">-</div>
+                                    <div class="cell" style="color:red" v-show="oldSysData.role && (oldSysData.role != newSysData.role)">否</div>
+                                    <div class="cell" v-show="oldSysData.role && (oldSysData.role == newSysData.role)">是</div>
+                                    <div class="cell" v-show="!oldSysData.role">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -206,10 +211,12 @@
                                     <div class="cell">所属门店</div>
                                 </td>
                                 <td>
-                                    <div class="cell">A门店</div>
+                                    <div class="cell">{{newSysData.store}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell">-</div>
+                                    <div class="cell" style="color:red" v-show="oldSysData.store && (oldSysData.store != newSysData.store)">否</div>
+                                    <div class="cell" v-show="oldSysData.store && (oldSysData.store == newSysData.store)">是</div>
+                                    <div class="cell" v-show="!oldSysData.store">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -217,10 +224,12 @@
                                     <div class="cell">所属商户</div>
                                 </td>
                                 <td>
-                                    <div class="cell">B渠道</div>
+                                    <div class="cell">{{newSysData.channel}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell">-</div>
+                                    <div class="cell" style="color:red" v-show="oldSysData.channel && (oldSysData.channel != newSysData.channel)">否</div>
+                                    <div class="cell" v-show="oldSysData.channel && (oldSysData.channel == newSysData.channel)">是</div>
+                                    <div class="cell" v-show="!oldSysData.channel">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -228,10 +237,12 @@
                                     <div class="cell">手机号码</div>
                                 </td>
                                 <td>
-                                    <div class="cell">15899996666</div>
+                                    <div class="cell">{{newSysData.phone}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell">-</div>
+                                    <div class="cell" style="color:red" v-show="oldSysData.phone && (oldSysData.phone != newSysData.phone)">否</div>
+                                    <div class="cell" v-show="oldSysData.phone && (oldSysData.phone == newSysData.phone)">是</div>
+                                    <div class="cell" v-show="!oldSysData.phone">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -239,10 +250,12 @@
                                     <div class="cell">身份证号</div>
                                 </td>
                                 <td>
-                                    <div class="cell">1111111111111111111</div>
+                                    <div class="cell">{{newSysData.idCard}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell">-</div>
+                                    <div class="cell" style="color:red" v-show="oldSysData.idCard && (oldSysData.idCard != newSysData.idCard)">否</div>
+                                    <div class="cell" v-show="oldSysData.idCard && (oldSysData.idCard == newSysData.idCard)">是</div>
+                                    <div class="cell" v-show="!oldSysData.idCard">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -253,18 +266,19 @@
                                     <div class="cell"></div>
                                 </td>
                                 <td>
-                                    <div class="cell">-</div>
+                                    <div class="cell"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td v-show="onlyNewSys">
                                     <div class="cell">是否与其他账号进行关联</div>
                                 </td>
-                                <td>
-                                    <div class="cell"><span style="color:red;">是（已与“张三12”进行关联）</span></div>
+                                <td> 
+                                    <div class="cell"><span style="color:red;" v-show="newSysData.isBind=='0'">是（已与“张三”进行关联）</span></div>
+                                    <div class="cell"><span v-show="newSysData.isBind=='1'">否</span></div>
                                 </td>
                                 <td>
-                                    <div class="cell">-</div>
+                                    <div class="cell"></div>
                                 </td>
                             </tr>
                         </table>
@@ -301,8 +315,7 @@
             </el-row>
         </div>
         <div class="msg-relative">
-            <el-button type="primary" :disabled="true" @click="msg_Relative()">信息关联</el-button>
-            <el-button type="primary" v-show="msgRelative.off">解除关联</el-button>
+            <el-button type="primary" :disabled="!canBind" @click="msg_Relative()">信息关联</el-button>
         </div>
     </div>
 </template>
@@ -343,11 +356,39 @@ export default {
             },
             // 关联信息和解除信息
             msgRelative: {
-                on: true,
-                off: false
+                on: true
             },
             // 只有新系统时的第一列显示数据
-            onlyNewSys: true
+            onlyNewSys: true,
+
+            // 旧新系统的具体数据
+            oldSysData: {
+                name: '老田',
+                role: 's1',
+                store: 'A门店',
+                channel: 'B商户',
+                phone: '15788889999',
+                idCard: '43112388887777',
+                number: 'asda123456',
+                isBind: '0',
+                city:'',
+                who:''
+            },
+            newSysData: {
+                name: '老1田',
+                role: 's1',
+                store: 'A门1店',
+                channel: 'B商1户',
+                phone: '157881889999',
+                idCard: '431121388887777',
+                number: 'asda123456',
+                isBind: '1', //1代表没有绑定，0代表已经绑定
+                city:'',
+                who:''
+            },
+            // 旧新系统的列表数据
+            oldSysItemData: [],
+            newSysItemData: []
         }
     },
     methods: {
@@ -356,7 +397,7 @@ export default {
             let rs = this.validate(form)
             let initParams = {}
             let dataParams = {}
-            // 判断是否通过验证
+            // 验证不通过
             if (!rs.isPass) {
                 this.$message({
                     message: rs.msg,
@@ -364,15 +405,15 @@ export default {
                 })
                 return
             } else {
-                // 判断是否是全选
+                // 验证通过并判断是否为全选
                 if (this.newForm.isAllSelect) {
                     dataParams = Object.assign(initParams, {
-                        [rs.type]: form.name
-                    }, { isAll: true })
+                        [rs.type]: form.name }, { isAll: true })
+                    this.fetchDate('new', 'all', dataParams)
                 } else {
                     dataParams = Object.assign(initParams, {
-                        [rs.type]: form.name
-                    }, { isAll: false })
+                        [rs.type]: form.name }, { isAll: false })
+                    this.fetchDate('new', 'one', dataParams)
                 }
                 this.newForm.name = ''
                 console.log(dataParams, '请求接口开始')
@@ -382,8 +423,9 @@ export default {
             if (!form.name) { return }
             let rs = this.validate(form)
             // 模拟接口初始数据 
-            let initParams = { id: '', name: '' }
+            let initParams = {}
             let dataParams = {}
+            // 验证不通过
             if (!rs.isPass) {
                 this.$message({
                     message: rs.msg,
@@ -391,21 +433,36 @@ export default {
                 })
                 return
             } else {
-                // 数据合并
+                // 验证通过并判断是否为全选
                 if (this.newForm.isAllSelect) {
-                    dataParams = Object.assign(initParams, {[rs.type]: form.name}, { isAll: true })
+                    dataParams = Object.assign(initParams, {
+                        [rs.type]: form.name }, { isAll: true })
+                    this.fetchDate('old', 'all', dataParams)
                 } else {
-                    dataParams = Object.assign(initParams, {[rs.type]: form.name}, { isAll: false })
+                    dataParams = Object.assign(initParams, {
+                        [rs.type]: form.name }, { isAll: false })
+                    this.fetchDate('old', 'one', dataParams)
                 }
                 this.oldForm.name = ''
                 console.log(dataParams, '请求接口开始')
-                // this.$router.push('/index') 
             }
+        },
+        // 请求接口
+        fetchDate(isNew, isAll, data) {
+            if (isNew == 'new' && isAll == 'one') {
+                console.log('新系统，单独搜索')
+            }
+            if (isNew == 'old' && isAll == 'one') {
+                console.log('老系统，单独搜索')
+            }
+            if (isAll == "all") {
+                console.log('新旧同时搜索')
+            } 
         },
         // 信息关联
         msg_Relative() {
-            let name1 = '张三'
-            let name2 = '李四'
+            let name1 = this.oldSysData.name
+            let name2 = this.newSysData.name
             const h = this.$createElement
             this.$msgbox({
                 title: '确认信息关联',
@@ -423,10 +480,11 @@ export default {
                 console.log('确定，开始接口操作')
             }).catch((res) => { console.log(res) })
         },
+        // 字段验证
         validate(opt) {
             let result = { isPass: false, msg: '', type: '' }
             if (opt.region == '员工姓名') {
-                let reg = /^[\u4e00-\u9fa5]+$/g.test(opt.name) && (opt.name.length < 11 && opt.name.length > 1)
+                let reg = /^[\u4e00-\u9fa5]{2,10}$/g.test(opt.name)
                 if (reg) {
                     result.isPass = true
                     result.type = 'username'
@@ -446,7 +504,7 @@ export default {
                 }
             }
             if (opt.region == '员工工号') {
-                let reg = /^[A-Za-z0-9]+$/.test(opt.name) && opt.name.length < 20
+                let reg = /^[A-Za-z0-9]{1,19}$/.test(opt.name)
                 if (reg) {
                     result.isPass = true
                     result.type = 'number'
@@ -456,7 +514,7 @@ export default {
                 }
             }
             if (opt.region == '身份证') {
-                let reg = /\d{18}/.test(opt.name) && (opt.name.length == 18)
+                let reg = /^\d{18}$/.test(opt.name)
                 if (reg) {
                     result.isPass = true
                     result.type = 'idCard'
@@ -468,9 +526,18 @@ export default {
             return result
         }
     },
+    computed: {
+        // 是否可以关联
+        canBind() {
+            return this.sysTableShow.old && this.sysTableShow.new && this.oldSysData.isBind == '1' && this.newSysData.isBind == '1'
+        }
+    },
     mounted() {
-        api.getOldImportData({ wd: '你好',test1:'测试1', test2: '测试2'}).then((res) => {
-            // console.log(res)
+        // api.searchNewSystem({ number: 'XHJX45885474' }).then((res) => {
+        //     console.log(res)
+        // })
+        api.searchOldSystem({ number: 'DX00201039' }).then((res) => {
+            console.log(res)
         })
     }
 }
@@ -479,11 +546,12 @@ export default {
 <style scoped lang="scss">
 .data-import {
     .data-import-cont {
-        min-width: 1100px;
-        // max-width: 1500px; 
-        .left-wrap,.right-wrap {
+        min-width: 1100px; // max-width: 1500px; 
+        .left-wrap,
+        .right-wrap {
             height: 450px;
-            .left,.right {
+            .left,
+            .right {
                 height: 435px;
                 overflow-y: auto;
             }
@@ -495,7 +563,7 @@ export default {
             position: relative;
             top: 0;
             left: 50%;
-        } 
+        }
         tr,
         th {
             height: 48px;
@@ -512,7 +580,7 @@ export default {
             width: 180px;
         }
         .more-info-wrap {
-            min-height: 130px; 
+            min-height: 130px;
             .more-info-item {
                 min-height: 130px;
                 display: flex;
@@ -548,8 +616,7 @@ export default {
         }
     }
     .msg-relative {
-        min-width: 1100px;
-        // max-width: 1500px;
+        min-width: 1100px; // max-width: 1500px;
         text-align: center;
         height: 60px;
         line-height: 60px;
