@@ -162,9 +162,9 @@
                                     <div class="cell">{{newSysData.username}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell" style="color:red" v-show="oldSysData.username && (oldSysData.username != newSysData.username)">否</div>
-                                    <div class="cell" v-show="oldSysData.username && (oldSysData.username == newSysData.username)">是</div>
-                                    <div class="cell" v-show="!oldSysData.username">-</div> 
+                                    <div class="cell" style="color:red" v-show="sysTableShow.old == true && (oldSysData.username != newSysData.username)">否</div>
+                                    <div class="cell" v-show="sysTableShow.old == true && (oldSysData.username == newSysData.username)">是</div>
+                                    <div class="cell" v-show="sysTableShow.old == false">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -175,9 +175,9 @@
                                     <div class="cell">{{newSysData.level}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell" style="color:red" v-show="oldSysData.level && (oldSysData.level != newSysData.level)">否</div>
-                                    <div class="cell" v-show="oldSysData.level && (oldSysData.level == newSysData.level)">是</div>
-                                    <div class="cell" v-show="!oldSysData.level">-</div> 
+                                    <div class="cell" style="color:red" v-show="sysTableShow.old == true && (oldSysData.level != newSysData.level)">否</div>
+                                    <div class="cell" v-show="sysTableShow.old == true && (oldSysData.level == newSysData.level)">是</div>
+                                    <div class="cell" v-show="sysTableShow.old == false">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -188,9 +188,9 @@
                                     <div class="cell">{{newSysData.store}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell" style="color:red" v-show="oldSysData.store && (oldSysData.store != newSysData.store)">否</div>
-                                    <div class="cell" v-show="oldSysData.store && (oldSysData.store == newSysData.store)">是</div>
-                                    <div class="cell" v-show="!oldSysData.store">-</div> 
+                                    <div class="cell" style="color:red" v-show="sysTableShow.old == true && (oldSysData.store != newSysData.store)">否</div>
+                                    <div class="cell" v-show="sysTableShow.old == true && (oldSysData.store == newSysData.store)">是</div>
+                                    <div class="cell" v-show="sysTableShow.old == false">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -201,9 +201,9 @@
                                     <div class="cell">{{newSysData.channelName}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell" style="color:red" v-show="oldSysData.channelName && (oldSysData.channelName != newSysData.channelName)">否</div>
-                                    <div class="cell" v-show="oldSysData.channelName && (oldSysData.channelName == newSysData.channelName)">是</div>
-                                    <div class="cell" v-show="!oldSysData.channelName">-</div> 
+                                    <div class="cell" style="color:red" v-show="sysTableShow.old == true && (oldSysData.channelName != newSysData.channelName)">否</div>
+                                    <div class="cell" v-show="sysTableShow.old == true && (oldSysData.channelName == newSysData.channelName)">是</div>
+                                    <div class="cell" v-show="sysTableShow.old == false">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -214,9 +214,9 @@
                                     <div class="cell">{{newSysData.phone}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell" style="color:red" v-show="oldSysData.phone && (oldSysData.phone != newSysData.phone)">否</div>
-                                    <div class="cell" v-show="oldSysData.phone && (oldSysData.phone == newSysData.phone)">是</div>
-                                    <div class="cell" v-show="!oldSysData.phone">-</div> 
+                                    <div class="cell" style="color:red" v-show="sysTableShow.old == true && (oldSysData.phone != newSysData.phone)">否</div>
+                                    <div class="cell" v-show="sysTableShow.old == true && (oldSysData.phone == newSysData.phone)">是</div>
+                                    <div class="cell" v-show="sysTableShow.old == false">-</div>
                                 </td>
                             </tr>
                             <tr>
@@ -227,9 +227,9 @@
                                     <div class="cell">{{newSysData.idCard}}</div>
                                 </td>
                                 <td>
-                                    <div class="cell" style="color:red" v-show="oldSysData.idCard && (oldSysData.idCard != newSysData.idCard)">否</div>
-                                    <div class="cell" v-show="oldSysData.idCard && (oldSysData.idCard == newSysData.idCard)">是</div>
-                                    <div class="cell" v-show="!oldSysData.idCard">-</div> 
+                                    <div class="cell" style="color:red" v-show="sysTableShow.old == true && (oldSysData.idCard != newSysData.idCard)">否</div>
+                                    <div class="cell" v-show="sysTableShow.old == true && (oldSysData.idCard == newSysData.idCard)">是</div>
+                                    <div class="cell" v-show="sysTableShow.old == false">-</div> 
                                 </td>
                             </tr>
                             <tr>
@@ -297,8 +297,8 @@ export default {
             },
             // 新旧系统的表格显示数据
             sysTableShow: {
-                old: false,
-                new: false
+                old: true,
+                new: true
             },
             // 新旧系统的多条数据显示
             sysItemShow: {
@@ -307,8 +307,8 @@ export default {
             },
             // 没有搜索时的默认状态
             defaultShow: {
-                old: true,
-                new: true
+                old: false,
+                new: false
             },
             // 搜索无结果时的文案显示
             noResultShow: {
@@ -316,34 +316,34 @@ export default {
                 new: false
             }, 
             // 只有新系统时的第一列显示数据
-            onlyNewSys: true,
+            // onlyNewSys: true,
 
             // 旧新系统的具体数据
             oldSysData: {
-                username: '',
-                user_id: '',
-                level: '',
-                store: '',
-                channelName: '',
-                phone: '',
-                idCard: '',
-                number: '',
-                associated: '',
-                assocUser: '',
-                city:''
+                username: '1212',
+                user_id: '568',
+                level: 's1',
+                store: 'A',
+                channelName: 'B渠道',
+                phone: '158787878',
+                idCard: '432525',
+                number: '45458',
+                associated: '否',
+                assocUser: '李橙',
+                city:'北京'
             },
             newSysData: {
-                username: '',
-                user_id: '',
-                level: '',
-                store: '',
-                channelName: '',
-                phone: '',
-                idCard: '',
-                number: '',
-                associated: '',
-                assocUser: '',
-                city:''
+                username: '老1田',
+                user_id: '5681',
+                level: 's11',
+                store: 'A1',
+                channelName: 'B渠道1',
+                phone: '1587878781',
+                idCard: '432525',
+                number: '45458',
+                associated: '否',
+                assocUser: '李橙',
+                city:'北京'
             },
             // 旧新系统的列表数据
             oldSysItemData: [],
@@ -444,6 +444,7 @@ export default {
                     this.sysTableShow.old = false
                     this.noResultShow.old = false
                     this.sysItemShow.old = true
+                    //搜索无结果
                 } else {
                     this.defaultShow.old = false
                     this.sysItemShow.old = false
@@ -482,7 +483,7 @@ export default {
                     this.noResultShow.new = false
                     this.sysTableShow.new = false
                     this.sysItemShow.new = true
-                    
+                    //搜索无结果
                 } else { 
                     this.defaultShow.new = false
                     this.sysItemShow.new = false
@@ -580,6 +581,10 @@ export default {
         // 是否可以关联
         canBind() {
             return this.sysTableShow.old && this.sysTableShow.new && this.oldSysData.associated == '否' && this.newSysData.associated == '否'
+        },
+        //只有新系统时，显示三列，否则显示两列
+        onlyNewSys() {
+            return this.sysTableShow.old == false ? true : false 
         }
     },
     mounted() {
@@ -618,6 +623,7 @@ export default {
         th {
             height: 48px;
             min-height: 48px;
+            text-align: center;
         }
         .result {
             height: 430px;
