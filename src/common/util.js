@@ -39,7 +39,7 @@ function checkNumber(val) {
 }
 
 export default {
-    jsonpUrl: process.env.NODE_ENV == 'development' ? 'http://www.hjximport.com:8888/user-data' : '',//jsonp开发环境、线上环境
+    jsonpUrl: process.env.NODE_ENV == 'development' ? 'https://dev-access.huanjixia.com/index/index' : '',//jsonp开发环境、线上环境
     api: process.env.NODE_ENV == 'development' ? '/pengkuan' : '',  
     apiCross: process.env.NODE_ENV == 'development' ? 'https://dev-amc-server.huanjixia.com' : 'https://dev-amc-server.huanjixia.com', //开发环境(51测试环境)
     // apiCross :  process.env.NODE_ENV == 'development'?'https://dev-amc-server.huanjixia.com':'https://amc-server.huanjixia.com' ,//开发环境 、线上环境 

@@ -297,8 +297,8 @@ export default {
             },
             // 新旧系统的表格显示数据
             sysTableShow: {
-                old: true,
-                new: true
+                old: false,
+                new: false
             },
             // 新旧系统的多条数据显示
             sysItemShow: {
@@ -307,8 +307,8 @@ export default {
             },
             // 没有搜索时的默认状态
             defaultShow: {
-                old: false,
-                new: false
+                old: true,
+                new: true
             },
             // 搜索无结果时的文案显示
             noResultShow: {
@@ -414,17 +414,16 @@ export default {
             } 
         },
         handlerOldSys(data) { 
-            api.searchOldSystem(data).then((res) => { 
-                // console.log(res)
+            api.searchOldSystem(data).then((res) => {  
                 if (res._data._ret != '0') {
                     this.$message({
-                        message: retinfo,
+                        message: res._data._errStr,
                         type: 'warning'
                     })
                     return
                 } 
-                if (res._data.list.length == 1) { 
-                    this.oldSysData = Object.assign(this.oldSysData, res.body.data[0])
+                if (res._data.data.length == 1) { 
+                    this.oldSysData = Object.assign(this.oldSysData, res._data.data[0])
                     this.defaultShow.old = false
                     this.sysItemShow.old = false 
                     this.noResultShow.old = false
@@ -435,8 +434,8 @@ export default {
                     // this.sysItemShow.old = true
                     // this.sysTableShow.old = false
                     // this.oldSysItemData = this.oldSysItemData
-                } else if (res.body.data.length > 1) {
-                    this.oldSysItemData = res.body.data
+                } else if (res._data.data.length > 1) {
+                    this.oldSysItemData = res._data.data
                     this.defaultShow.old = false 
                     this.sysTableShow.old = false
                     this.noResultShow.old = false
@@ -452,17 +451,17 @@ export default {
         },
         handlerNewSys(data) {
             api.searchNewSystem(data).then((res) => {
-                if (res.body.ret != '0') {
+                if (res._data._ret != '0') {
                     this.$message({
-                        message: retinfo,
+                        message: res._data._errStr,
                         type: 'warning'
                     })
                     return
                 } 
 
 
-                if (res.body.data.length == 1) {
-                    this.newSysData = Object.assign(this.newSysData, res.body.data[0])
+                if (res._data.data.length == 1) {
+                    this.newSysData = Object.assign(this.newSysData, res._data.data[0])
                     this.defaultShow.new = false 
                     this.sysItemShow.new = false
                     this.noResultShow.new = false
@@ -473,8 +472,8 @@ export default {
                     // this.sysItemShow.new = true
                     // this.sysTableShow.new = false
                     // this.newSysItemData = this.newSysItemData
-                } else if (res.body.data.length > 1) {
-                    this.newSysItemData = res.body.data
+                } else if (res._data.data.length > 1) {
+                    this.newSysItemData = res._data.data
                     this.defaultShow.new = false
                     this.noResultShow.new = false
                     this.sysTableShow.new = false
@@ -521,15 +520,32 @@ export default {
                 cancelButtonText: '取消',
                 confirmButtonText: '确认'
             }).then((action) => {
-                console.log('确定，开始接口操作')
-                let oldSysUserId = this.oldSysData.user_id,
-                    newSysUserId = this.newSysData.user_id
-                console.log(oldSysUserId,newSysUserId ) 
-                //数据关联成功后，若后台无刷新的数据，那么就需要手动修改
-                this.oldSysData.associated = '是'
-                this.oldSysData.assocUser = this.newSysData.username
-                this.newSysData.associated = '是'
-                this.newSysData.assocUser = this.oldSysData.username
+                console.log('确定，开始接口操作') 
+                let data = {
+                    old_user_id: this.oldSysData.user_id,
+                    new_user_id: this.newSysData.user_id
+                }
+                api.msgBind(data).then((res)=>{
+                    // console.log(res)
+                    if (res._data._ret != '0') {
+                        this.$message({
+                            message: res._data._errStr,
+                            type: 'warning'
+                        })
+                        return
+                    } else if(res._data._ret == '0') {
+                        this.$message({
+                            message: res._data._errStr,
+                            type: 'warning'
+                        })
+                        //数据关联成功后，若后台无刷新的数据，那么就需要手动修改
+                        this.oldSysData.associated = '是'
+                        this.oldSysData.assocUser = this.newSysData.username
+                        this.newSysData.associated = '是'
+                        this.newSysData.assocUser = this.oldSysData.username 
+                    }
+                    
+                }) 
             }).catch((res) => { console.log(res) })
         },
         // 字段验证

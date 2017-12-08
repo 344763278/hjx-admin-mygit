@@ -127,7 +127,7 @@ export function crossDomain(Interface, params) {
 
 /* jsonp接口开始 */ 
 export function jsonp(_interface, params) { 
-    let url = `${util.jsonpUrl}?type=jsonp`,
+    let url = `${util.jsonpUrl}?type=jsonp`, 
         token = get_cookie('useruuid'),
         userid = get_cookie('userid') ,
         timestamps = Math.floor(new Date().getTime()/1000) + ''
@@ -138,16 +138,16 @@ export function jsonp(_interface, params) {
             "_msgType": "request",
             "_timestamps": timestamps,
             "_interface": _interface,
-            "_remark": "",    
+            "_remark": "123",    
         },
-        "_param": {           
+        "_param": { 
+            "system":"test",          
             "userid": userid, 
             "token": token,  
         }
     }
     // 合并参数 
-    resParams._param = Object.assign({}, resParams._param, params)
-    // console.log(resParams)
+    resParams._param = Object.assign({}, resParams._param, params) 
     // 拼接参数,注意jsonp不能直接字符串化json,后台解析不了
     for (let i in resParams) { 
         for(let j in resParams[i] ) {
@@ -159,6 +159,11 @@ export function jsonp(_interface, params) {
     return new Promise((resolve, reject) => {
         originJsonp(url, {param: 'callback'}, (err, data) => {
             if (!err) {
+                // 登录超时处理
+                /*if (data._data._ret == '1' && data._data._errStr == '登录验证不通过') {
+                    let host = encodeURIComponent(util.accessHomeHost)
+                    window.location.href = util.powerCenterLoginPage + '/login?system_id=' + util.homeSystemId + '&jump_url=' + host
+                }*/  
                 resolve(data)
             } else {
                 reject(err)
@@ -169,11 +174,10 @@ export function jsonp(_interface, params) {
 /* jsonp接口结束 */
 
 export default {
-    //jsonp接口数据关联
-    searchNewSystem(params) { return jsonp('newSystem',params) }, //搜索新系统
-    searchOldSystem(params) { return jsonp('oldSystem',params) }, //搜索旧系统
-    searchAllSystem(params) { return jsonp('newSystem',params) }, //新旧同时搜索
-    msgBind(params) { return jsonp('newSystem',params) }, //信息关联
+    /* jsonp接口 - 数据导入 */
+    searchNewSystem(params) { return jsonp('import_newSystem',params) }, //搜索新系统
+    searchOldSystem(params) { return jsonp('import_oldSystem',params) }, //搜索旧系统 
+    msgBind(params) { return jsonp('import_bind',params) }, //信息关联
 
     Login(params) { return fetch('loginLogic', params) }, // 用户登录
     upload(params) { return fetch('upload', params) }, // 
