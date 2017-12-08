@@ -293,7 +293,7 @@ export default {
             newForm: {
                 region: '员工姓名',
                 name: '',
-                isAllSelect: false
+                isAllSelect: true
             },
             // 新旧系统的表格显示数据
             sysTableShow: {
@@ -314,10 +314,7 @@ export default {
             noResultShow: {
                 old: false,
                 new: false
-            }, 
-            // 只有新系统时的第一列显示数据
-            // onlyNewSys: true,
-
+            },   
             // 旧新系统的具体数据
             oldSysData: {
                 username: '1212',
@@ -390,7 +387,7 @@ export default {
             } else {
                 // 验证通过并判断是否为全选
                 if (this.newForm.isAllSelect) { 
-                    dataParams = {[rs.type]: form.name }
+                    dataParams = {[rs.type]: form.name } 
                     this.fetchDate('old', 'all', dataParams)
                 } else {
                     dataParams = {[rs.type]: form.name }
@@ -403,11 +400,11 @@ export default {
         // 请求接口
         fetchDate(isNew, isAll, data) {
             if (isNew == 'new' && isAll == 'one') {
-                console.log('新系统，单独搜索')
+                console.log('新系统，单独搜索') 
                 this.handlerNewSys(data)
             }
             if (isNew == 'old' && isAll == 'one') {
-                console.log('老系统，单独搜索') 
+                console.log('老系统，单独搜索')   
                 this.handlerOldSys(data)
             }
             if (isAll == "all") {
@@ -417,16 +414,16 @@ export default {
             } 
         },
         handlerOldSys(data) { 
-            api.searchOldSystem(data).then((res) => {
-                if (res.body.ret != '0') {
+            api.searchOldSystem(data).then((res) => { 
+                // console.log(res)
+                if (res._data._ret != '0') {
                     this.$message({
                         message: retinfo,
                         type: 'warning'
                     })
                     return
-                }
-
-                if (res.body.data.length == 1) {
+                } 
+                if (res._data.list.length == 1) { 
                     this.oldSysData = Object.assign(this.oldSysData, res.body.data[0])
                     this.defaultShow.old = false
                     this.sysItemShow.old = false 
@@ -450,8 +447,7 @@ export default {
                     this.sysItemShow.old = false
                     this.sysTableShow.old = false
                     this.noResultShow.old = true
-                }
-
+                } 
             }) 
         },
         handlerNewSys(data) {
@@ -509,8 +505,8 @@ export default {
         },
         // 信息关联
         msg_Relative() {
-            let name1 = this.oldSysData.username
-            let name2 = this.newSysData.username
+            let name1 = this.oldSysData.username,
+                name2 = this.newSysData.username
             const h = this.$createElement
             this.$msgbox({
                 title: '确认信息关联',
@@ -528,7 +524,12 @@ export default {
                 console.log('确定，开始接口操作')
                 let oldSysUserId = this.oldSysData.user_id,
                     newSysUserId = this.newSysData.user_id
-                console.log(oldSysUserId,newSysUserId )
+                console.log(oldSysUserId,newSysUserId ) 
+                //数据关联成功后，若后台无刷新的数据，那么就需要手动修改
+                this.oldSysData.associated = '是'
+                this.oldSysData.assocUser = this.newSysData.username
+                this.newSysData.associated = '是'
+                this.newSysData.assocUser = this.oldSysData.username
             }).catch((res) => { console.log(res) })
         },
         // 字段验证

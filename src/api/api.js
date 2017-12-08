@@ -127,21 +127,26 @@ export function crossDomain(Interface, params) {
 
 /* jsonp接口开始 */ 
 export function jsonp(_interface, params) { 
-    let token = get_cookie('useruuid')
-    let url = `${util.jsonpUrl}?type=jsonp&token=${token}`
+    let url = `${util.jsonpUrl}?type=jsonp`,
+        token = get_cookie('useruuid'),
+        userid = get_cookie('userid') ,
+        timestamps = Math.floor(new Date().getTime()/1000) + ''
+
     let resParams = {     
-        "head": {        
-            "version": "0.01",
-            "msgtype": "request",
-            "interface": _interface,
-            "remark": ""    
+        "_head": {        
+            "_version": "0.01",
+            "_msgType": "request",
+            "_timestamps": timestamps,
+            "_interface": _interface,
+            "_remark": "",    
         },
-        "params": {        
-            "system": "test"  
+        "_param": {           
+            "userid": userid, 
+            "token": token,  
         }
     }
     // 合并参数 
-    resParams.params = Object.assign({}, resParams.params, params)
+    resParams._param = Object.assign({}, resParams._param, params)
     // console.log(resParams)
     // 拼接参数,注意jsonp不能直接字符串化json,后台解析不了
     for (let i in resParams) { 
